@@ -45,32 +45,35 @@ public class TreeGenerator : MonoBehaviour
     }
     private void DefaultChunk()
     {
+        
+        int num = Random.Range(1, 3) == 1 ? Random.Range(-30, -10) : Random.Range(10, 30);
         Chunk newChunk;
         for (int i = 0; i < 1; i++)
         {
             newChunk = Instantiate(_treeChunk);
             newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
-            newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + Random.Range(-30, 30), 0));
+            newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + num, 0));
             _spawnedChunks.Add(newChunk);
         }
         newChunk = Instantiate(_fetchPrefabs[0]);
         newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
-        newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + Random.Range(-30, -10), 0));
+        newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 2].transform.rotation.eulerAngles.y + num, 0));
         _spawnedChunks.Add(newChunk);
     }
     private void RandomizeChunk()
     {
+        int num = Random.Range(1, 2) == 1 ? Random.Range(-40, -15) : Random.Range(15, 40);
         Chunk newChunk;
         for (int i = 0; i < 1; i++)
         {
             newChunk = Instantiate(_treeChunk);
             newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
-            newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + Random.Range(-30, -10), 0));
+            newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + num, 0));
             _spawnedChunks.Add(newChunk);
         }
         newChunk = Instantiate(_fetchPrefabs[0]);
         newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
-        newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y, 0));
+        newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 2].transform.rotation.eulerAngles.y + num, 0));
         _spawnedChunks.Add(newChunk);
     }
 }
