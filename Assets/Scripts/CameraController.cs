@@ -23,22 +23,23 @@ public class CameraController : MonoBehaviour
     {
 
         Debug.Log("Rotation" + _player.transform.position.y);
-        if (Input.GetMouseButtonDown(0) && _getDown == false && Input.mousePosition.y > 300)
+        if (Input.GetMouseButtonDown(0) && _getDown == false && Input.mousePosition.y > 1500)
         {
             Debug.Log("MOUSEDOWN");
             _mouseDownPos = Input.mousePosition;
             _getDown = true;
         }
-        if (Input.GetMouseButtonUp(0) && Input.mousePosition.y > 300)
+        if (Input.GetMouseButtonUp(0) && Input.mousePosition.y > 1500)
         {
+            var swipeTrigger = Mathf.Abs(Input.mousePosition.x - _mouseDownPos.x);
             Debug.Log("MOUSEUP");
-            if (Input.mousePosition.x > _mouseDownPos.x)
+            if (Input.mousePosition.x > _mouseDownPos.x && swipeTrigger>100)
             {
-
+                Debug.Log("");
                 RightDrag();
 
             }
-            if (Input.mousePosition.x < _mouseDownPos.x)
+            if (Input.mousePosition.x < _mouseDownPos.x && swipeTrigger > 100)
             {
                 LeftDrag();
 
