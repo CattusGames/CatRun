@@ -19,12 +19,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _water;
     [SerializeField] private float _timeLeft;
     [SerializeField] private float _time;
-    PlayerPrefs _record;
     private int _score;
     [SerializeField] Text _scoreText;
     [SerializeField] Text _highScoreText;
+    private Animator _animator;
+    [HideInInspector]public Vector3 _checkPoint;
     void Start()
     {
+        _animator = gameObject.GetComponent<Animator>();
         _timeLeft = _time;
         rb = gameObject.GetComponent<Rigidbody>();
         _rotate = false;
@@ -34,20 +36,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.LogError("SPEED :"+rb.velocity.magnitude);
         _scoreText.text = _score.ToString();
         var recentScore = (int)gameObject.transform.position.y;
         if (_score<recentScore)
         {
             _score = recentScore;
         }
-        _water.position = Vector3.MoveTowards(_water.position, gameObject.transform.position, 0.2f * Time.deltaTime);
 
     }
     private void OnMouseDown()
     {
-        if (OnFetch() != null)
+        if (OnFetchChecker()==true)
         {
-            var rotation = _mainCamera.transform.rotation.eulerAngles.y;
+            _checkPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+            _animator.SetBool("IsJump",true);
+            float rotation = _mainCamera.transform.rotation.eulerAngles.y;
             if (rotation == 0f)
             {
                 _mouseDownPos = Input.mousePosition;
@@ -71,9 +75,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (OnFetch() != null)
+        
+        if (OnFetchChecker()==true)
         {
-            var rotation = _mainCamera.transform.rotation.eulerAngles.y;
+            float rotation = _mainCamera.transform.rotation.eulerAngles.y;
             if (rotation == 0f)
             {
                 _mouseUpPos = Input.mousePosition;
@@ -103,14 +108,14 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (OnFetch() != null)
+        if (OnFetchChecker()==true)
         {
             rb.AddForce(_jumpDirection * _jumpMagnitude, ForceMode.Acceleration);
         }
     }
     public GameObject OnFetch()
     {
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale, Quaternion.identity, _whatIsFetch);
+        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale/2, Quaternion.identity, _whatIsFetch);
         if (hitColliders.Length>0)
         {
             //gameObject.transform.position = hitColliders[0].gameObject.transform.position;
@@ -122,16 +127,32 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    private void OnTriggerEnter(Collider collision)
+    public bool OnFetchChecker()
+    {
+        if (OnFetch() != null) return true;
+        else return false;
+    }
+    public void ToCheckPoint()
+    {
+        gameObject.transform.position = new Vector3(_checkPoint.x, _checkPoint.y, _checkPoint.z);
+    }
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject == _water.gameObject)
         {
-
-            if (PlayerPrefs.GetInt("Score")<_score)
+            _animator.SetBool("InWater",true);
+            _animator.SetBool("InJump",false);
+            rb.drag = 1.5f;
+            rb.AddForce(transform.up*15f);
+            if (Input.GetKey("W")==true)
             {
-                PlayerPrefs.SetInt("Score", _score);
+                if (PlayerPrefs.GetInt("Score") < _score)
+                {
+                    PlayerPrefs.SetInt("Score", _score);
+                }
+                SceneManager.LoadScene(0);
             }
-            SceneManager.LoadScene(0);
+           
         }
     }
     private void OnCollisionEnter(Collision collision)
