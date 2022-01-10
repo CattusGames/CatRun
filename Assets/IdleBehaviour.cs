@@ -10,7 +10,7 @@ public class IdleBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _waitTimer = 0f;
-        _playerController = animator.gameObject.GetComponent<PlayerController>();  
+        _playerController = animator.gameObject.GetComponentInParent<PlayerController>();  
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

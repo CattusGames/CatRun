@@ -12,9 +12,13 @@ public class PlayerController : MonoBehaviour
     private Vector3 _jumpDirection;
     public TrajectoryRenderer Trajectory;
     public LayerMask _whatIsFetch;
+    [HideInInspector] public Vector3 _checkPoint;
+    public bool _rotate;
+
+
+
     [SerializeField] private Vector3 _mouseDownPos;
     [SerializeField] private Vector3 _mouseUpPos;
-    public bool _rotate;
     [SerializeField] private Transform _mainCamera;
     [SerializeField] private Transform _water;
     [SerializeField] private float _timeLeft;
@@ -23,10 +27,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Text _scoreText;
     [SerializeField] Text _highScoreText;
     private Animator _animator;
-    [HideInInspector]public Vector3 _checkPoint;
+    [SerializeField]private GameObject _body;
+
     void Start()
     {
-        _animator = gameObject.GetComponent<Animator>();
+        
+        _animator = gameObject.GetComponentInChildren<Animator>();
         _timeLeft = _time;
         rb = gameObject.GetComponent<Rigidbody>();
         _rotate = false;
@@ -75,25 +81,31 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        
         if (OnFetchChecker()==true)
         {
             float rotation = _mainCamera.transform.rotation.eulerAngles.y;
             if (rotation == 0f)
             {
                 _mouseUpPos = Input.mousePosition;
+                JumpRotate(_mouseDownPos,_mouseUpPos,_body);
             }
             else if (rotation == 180f)
             {
                 _mouseUpPos = new Vector3(-Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.z);
+                JumpRotate(_mouseDownPos, _mouseUpPos, _body);
+
             }
             else if (rotation == 90f)
             {
                 _mouseUpPos = new Vector3(Input.mousePosition.z, Input.mousePosition.y, -Input.mousePosition.x);
+                JumpRotate(_mouseDownPos, _mouseUpPos, _body);
+
             }
             else if (rotation == 270f)
             {
                 _mouseUpPos = new Vector3(Input.mousePosition.z, Input.mousePosition.y, Input.mousePosition.x);
+                JumpRotate(_mouseDownPos, _mouseUpPos, _body);
+
             }
             _jumpDirection = (_mouseDownPos - _mouseUpPos) / 3;
             _jumpMagnitude = _jumpDirection.magnitude / 100;
@@ -112,6 +124,19 @@ public class PlayerController : MonoBehaviour
         {
             rb.AddForce(_jumpDirection * _jumpMagnitude, ForceMode.Acceleration);
         }
+    }
+    private void JumpRotate(Vector3 mouseDown,Vector3 mouseUp,GameObject body)
+    {
+        Vector3 focus;
+        focus = Vector3.Scale(mouseDown - mouseUp, new Vector3(1, 0, 1));
+        if (focus.z < 0)
+        {
+            focus.y = 180;
+            focus.x = 0;
+            focus.z = 0;
+            focus = Vector3.Scale(mouseDown - mouseUp, new Vector3(1, 0, 1));
+        }
+        body.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(focus), 1f);
     }
     public GameObject OnFetch()
     {

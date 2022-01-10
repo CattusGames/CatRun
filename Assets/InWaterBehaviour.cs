@@ -11,8 +11,8 @@ public class InWaterBehaviour : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         _waitTimer = 0f;
-        _rb = animator.GetComponent<Rigidbody>();
-        _playerController = animator.gameObject.GetComponent<PlayerController>();
+        _rb = animator.GetComponentInParent<Rigidbody>();
+        _playerController = animator.gameObject.GetComponentInParent<PlayerController>();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

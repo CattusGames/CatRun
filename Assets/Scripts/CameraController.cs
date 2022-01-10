@@ -12,16 +12,13 @@ public class CameraController : MonoBehaviour
     private bool _getDown = false;
     [SerializeField] private Transform _player;
 
-    private float _startRotation;
-
     private void Start()
     {
-        _startRotation = transform.rotation.y;
+
     }
 
     private void Update()
     {
-
         Debug.Log("Rotation" + _player.transform.position.y);
         if (Input.GetMouseButtonDown(0) && _getDown == false && Input.mousePosition.y > 1500)
         {
@@ -48,18 +45,16 @@ public class CameraController : MonoBehaviour
     }
     private void RightDrag()
     {
-
         transform.RotateAround(_player.transform.position, Vector3.up, 90);
         Debug.Log("RDrag" + _player.transform.position.y);
         _getDown = false;
-
+       
     }
+
     private void LeftDrag()
     {
-
-            transform.RotateAround(_player.transform.position, Vector3.up, -90);
+        transform.RotateAround(_player.transform.position, Vector3.up, -90);
         Debug.Log("LDrag" + _player.transform.position.y);
-
         _getDown = false;
 
     }
