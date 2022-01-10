@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Leaves : MonoBehaviour
 {
+    [SerializeField]private GameObject _raven;
+    [SerializeField] private Transform _spawnPoint;
     // Start is called before the first frame update
     private void Start()
     {
@@ -17,6 +19,11 @@ public class Leaves : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        gameObject.SetActive(false);
+        gameObject.GetComponent<MeshRenderer>().enabled = false;
+        gameObject.GetComponent<MeshCollider>().enabled = false;
+        var raven = Instantiate(_raven);
+        raven.gameObject.transform.position = _spawnPoint.position;
+
+
     }
 }
