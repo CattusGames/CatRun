@@ -6,14 +6,23 @@ using UnityEngine.Events;
 
 public class Raven : MonoBehaviour
 {
+
+    [HideInInspector]public GameObject _player;
+    [HideInInspector] public float _speed;
+
     private Vector3 _attackPos;
-    private GameObject _player;
     private Vector3 _playerPos;
-    public bool _inPoint;
+    private bool _inPoint;
+    private bool _touch;
+    private bool _particle;
+    [SerializeField] private GameObject _deadParticle;
+    [SerializeField] private GameObject _body;
+    private float _waitTimer = 0f;
+
     // Start is called before the first frame update
     private void Awake()
     {
-
+        _particle = false;
         _inPoint = false;
         _player = GameObject.FindWithTag("Player");
     }
@@ -27,6 +36,9 @@ public class Raven : MonoBehaviour
     void Update()
     {
         _playerPos = _player.transform.position;
+        Vector3 new_rotation = _playerPos - transform.position;
+        transform.right = new_rotation;
+
         ToAttackPosition();
     }
     private void ToAttackPosition()
@@ -35,11 +47,18 @@ public class Raven : MonoBehaviour
 
         if(_inPoint==false)
         {
-            
-       gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _attackPos, 2f * Time.deltaTime);
+            _speed = 2f;
+            gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _attackPos, _speed * Time.deltaTime);
             if (gameObject.transform.position == _attackPos)
             {
-                _inPoint = true;
+                if (_touch==true)
+                {
+                    GoAhead();
+                }
+                else
+                {
+                    _inPoint = true;
+                }
             }
             
         }
@@ -51,18 +70,35 @@ public class Raven : MonoBehaviour
     }
     public void Attack()
     {
-        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _playerPos, 4f * Time.deltaTime);
+        gameObject.transform.position = Vector3.MoveTowards(gameObject.transform.position, _playerPos, _speed * Time.deltaTime);
 
+    }
+    public void GoAhead()
+    {
+        _body.SetActive(false);
+        if (_particle == true)
+        {
+            Instantiate(_deadParticle, gameObject.transform.position, Quaternion.identity);
+            _particle = false;
+        }
+
+        _waitTimer += Time.deltaTime;
+        if (_waitTimer >= 4f)
+        {
+            Destroy(gameObject);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             _inPoint = false;
+            _touch = true;
         }
     }
     private void OnMouseDown()
     {
-        gameObject.SetActive(false);
+        _particle = true;
+        GoAhead();
     }
 }

@@ -167,7 +167,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("InWater",true);
             _animator.SetBool("InJump",false);
-            rb.drag = 1.5f;
+            rb.drag = 3f;
             rb.AddForce(transform.up*15f);
             if (Input.GetKey("W")==true)
             {
@@ -182,7 +182,6 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-
         if (collision.transform.tag=="Raven")
         {
             foreach (ContactPoint contact in collision.contacts)
@@ -194,39 +193,15 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-
+    }
+    private void OnCollisionStay(Collision collision)
+    {
         if (collision.gameObject == OnFetch())
         {
-
-            _timeLeft -= Time.deltaTime;
-            if (_timeLeft == 0)
+            if (_animator.GetBool("InWater") == true)
             {
-                _water.position = gameObject.transform.position - new Vector3(0, 5, 0);
-            }
-            if (_timeLeft < -0.5)
-            {
-                _water.position = Vector3.MoveTowards(_water.position,gameObject.transform.position,2f*Time.deltaTime);
+                Physics.IgnoreCollision(OnFetch().GetComponent<Collider>(), GetComponent<Collider>());
             }
         }
-        else
-        {
-            _water.position = Vector3.MoveTowards(_water.position, gameObject.transform.position, 0f * Time.deltaTime);
-        }
-
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject==OnFetch())
-        {
-            _timeLeft = _time;
-        }
-    }
-    private IEnumerator WaterComing(float speed)
-    {
-        
-        yield return new WaitForSeconds(1f);
-        
-        
     }
 }
