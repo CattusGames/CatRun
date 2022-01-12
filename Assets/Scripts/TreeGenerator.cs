@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 public class TreeGenerator : MonoBehaviour
 {
-    [SerializeField] private Transform _player;
+    [SerializeField] private GameObject _player;
     [SerializeField] private Chunk[] _fetchPrefabs;
     [SerializeField] private Chunk _firstChunk;
     [SerializeField] private Chunk _treeChunk;
@@ -19,7 +19,7 @@ public class TreeGenerator : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_player.position.y>_spawnedChunks[_spawnedChunks.Count - 1]._end.position.y-5)
+        if (_player.transform.position.y>_spawnedChunks[_spawnedChunks.Count - 1]._end.position.y-5)
         {
             SpawnChunk();
         }
