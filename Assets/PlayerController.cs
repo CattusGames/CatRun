@@ -23,12 +23,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform _water;
     [SerializeField] private float _timeLeft;
     [SerializeField] private float _time;
-    private int _score;
-    [SerializeField] Text _scoreText;
-    [SerializeField] Text _highScoreText;
+
     private Animator _animator;
     [SerializeField]private GameObject _body;
-
+    [SerializeField] private GameManager _gameManager;
     void Start()
     {
         
@@ -36,23 +34,19 @@ public class PlayerController : MonoBehaviour
         _timeLeft = _time;
         rb = gameObject.GetComponent<Rigidbody>();
         _rotate = false;
-        _highScoreText.text = "HS: " + PlayerPrefs.GetInt("Score").ToString();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.LogError("SPEED :"+rb.velocity.magnitude);
-        _scoreText.text = _score.ToString();
-        var recentScore = (int)gameObject.transform.position.y;
-        if (_score<recentScore)
-        {
-            _score = recentScore;
-        }
+        
 
     }
     private void OnMouseDown()
     {
+        _gameManager._start = true;
+        _gameManager.DisableAllPanel();
         if (OnFetchChecker()==true)
         {
             _checkPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -169,14 +163,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("InJump",false);
             rb.drag = 3f;
             rb.AddForce(transform.up*15f);
-            if (Input.GetKey("W")==true)
-            {
-                if (PlayerPrefs.GetInt("Score") < _score)
-                {
-                    PlayerPrefs.SetInt("Score", _score);
-                }
-                SceneManager.LoadScene(0);
-            }
+
            
         }
     }
