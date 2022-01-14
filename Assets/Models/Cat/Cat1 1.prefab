@@ -146,16 +146,16 @@ MonoBehaviour:
   _whatIsFetch:
     serializedVersion: 2
     m_Bits: 64
+  _checkPoint: {x: 0, y: 0, z: 0}
+  _rotate: 0
   _mouseDownPos: {x: 0, y: 0, z: 0}
   _mouseUpPos: {x: 0, y: 0, z: 0}
-  _rotate: 0
-  _mainCamera: {fileID: 0}
+  _mainCamera: {fileID: 5730842750233600516}
   _water: {fileID: 0}
   _timeLeft: 0
   _time: 3
-  _scoreText: {fileID: 0}
-  _highScoreText: {fileID: 0}
-  _checkPoint: {x: 0, y: 0, z: 0}
+  _body: {fileID: 3192790016254778154}
+  _gameManager: {fileID: 0}
 --- !u!114 &978548079314235860
 MonoBehaviour:
   m_ObjectHideFlags: 0
