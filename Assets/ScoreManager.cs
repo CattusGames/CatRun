@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
-    private int _score;
-    [SerializeField]public Text _scoreText, _highScoreText, _coinText;
+
+    [SerializeField]public TextMeshProUGUI _scoreText, _highScoreText, _coinText, _endScoreText;
 
     private Animation _scoreTextAnim,_highScoreAnim, _coinTextAnim;
 
     [HideInInspector]
-    public int score = 0;
+    public int _score = 0;
 
     void Start()
     {
@@ -19,21 +20,17 @@ public class ScoreManager : MonoBehaviour
         _coinTextAnim = _coinText.gameObject.GetComponent<Animation>();     //Initializes CoinTextAnim
         _coinText.text = PlayerPrefs.GetInt("Coin", 0).ToString();     //Writes out the number of Coins to the screen
 
-        _highScoreText.text = "HS: " + PlayerPrefs.GetInt("Score").ToString();
-
         _scoreText.text = _score.ToString();
-        var recentScore = (int)gameObject.transform.position.y;
-        if (_score < recentScore)
-        {
-            _score = recentScore;
-        }
     }
-
+    private void Update()
+    {
+        _endScoreText.text = _score.ToString();
+        _highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+    }
     public void IncrementScore()
     {
         if (FindObjectOfType<GameManager>()._gameIsOver == false)       //If the game is not over
-
-        _scoreText.text = (++score).ToString();      //Increments the 'scoretext' text as well as the score variable's value and writes it out to the screen
+        _scoreText.text = (++_score).ToString();      //Increments the 'scoretext' text as well as the score variable's value and writes it out to the screen
         _scoreTextAnim.Play();       //Plays scoreTextAnim
         FindObjectOfType<AudioManager>().ScoreSound();      //Plays scoreSound
     }

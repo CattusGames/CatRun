@@ -27,9 +27,10 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     [SerializeField]private GameObject _body;
     [SerializeField] private GameManager _gameManager;
+    private GameObject _highFetch;
     void Start()
     {
-        
+        _highFetch = OnFetch();
         _animator = gameObject.GetComponentInChildren<Animator>();
         _timeLeft = _time;
         rb = gameObject.GetComponent<Rigidbody>();
@@ -45,8 +46,8 @@ public class PlayerController : MonoBehaviour
     }
     private void OnMouseDown()
     {
+        _gameManager.StartGamePanelActivation();
         _gameManager._start = true;
-        _gameManager.DisableAllPanel();
         if (OnFetchChecker()==true)
         {
             _checkPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -105,7 +106,6 @@ public class PlayerController : MonoBehaviour
             _jumpMagnitude = _jumpDirection.magnitude / 100;
             Vector3 speed = _jumpDirection * _jumpMagnitude / 50;
             Trajectory.ShowTrajectory(gameObject.transform.localPosition, speed);
-            Debug.Log(_jumpDirection);
 
         }
 
@@ -132,6 +132,7 @@ public class PlayerController : MonoBehaviour
         }
         body.transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(focus), 1f);
     }
+
     public GameObject OnFetch()
     {
         Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale/2, Quaternion.identity, _whatIsFetch);
@@ -185,6 +186,12 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject == OnFetch())
         {
+            if (_highFetch.transform.position.y<OnFetch().transform.position.y)
+            {
+                _highFetch = OnFetch();
+                FindObjectOfType<ScoreManager>().IncrementScore();
+            }
+
             if (_animator.GetBool("InWater") == true)
             {
                 Physics.IgnoreCollision(OnFetch().GetComponent<Collider>(), GetComponent<Collider>());

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _main, _settings, _paused, _end, _coinBuy, _shop, _muteImage;
-    public Text _scoreText, _highScoreText, _endScoreText, _endHighScoreText;
+    [SerializeField] private GameObject _main, _settings, _paused, _end, _coinBuy, _shop,_startGame, _muteImage;
+    public TextMeshProUGUI  _highScoreText;
     [HideInInspector] public bool _gameIsOver = false;
     [HideInInspector] public bool _start = false;
     // Start is called before the first frame update
@@ -23,10 +24,6 @@ public class GameManager : MonoBehaviour
 
 
     }
-    public void StartGame()
-    {
-        _start = true;
-    }
     public void DisableAllPanel()
     {
         _main.SetActive(false);
@@ -41,6 +38,7 @@ public class GameManager : MonoBehaviour
         _main.SetActive(true);
         _settings.SetActive(false); 
         _paused.SetActive(false);
+        _startGame.SetActive(false);
         _end.SetActive(false);
         _coinBuy.SetActive(false);
         _shop.SetActive(false);
@@ -49,9 +47,10 @@ public class GameManager : MonoBehaviour
     public void EndPanelActivation()
     {
         _gameIsOver = true;
-
+        HighScoreCheck();
         _main.SetActive(false);
         _settings.SetActive(false);
+        _startGame.SetActive(false);
         _paused.SetActive(false);
         _end.SetActive(true);
         _coinBuy.SetActive(false);
@@ -64,14 +63,15 @@ public class GameManager : MonoBehaviour
     public void ShopPanelActivation()
     {
         _main.SetActive(false);
+        _shop.SetActive(true);
         _settings.SetActive(false);
         _paused.SetActive(false);
         _end.SetActive(false);
         _coinBuy.SetActive(false);
-        _shop.SetActive(true);
     }
     public void SettingsPanelActivation()
     {
+
         _main.SetActive(false);
         _settings.SetActive(true);
         _paused.SetActive(false);
@@ -81,9 +81,22 @@ public class GameManager : MonoBehaviour
     }
     public void PausedPanelActivation()
     {
+        _start = false;
         _main.SetActive(false);
         _settings.SetActive(false);
         _paused.SetActive(true);
+        _startGame.SetActive(false);
+        _end.SetActive(false);
+        _coinBuy.SetActive(false);
+        _shop.SetActive(false);
+    }
+    public void StartGamePanelActivation()
+    {
+        _start = true;
+        _main.SetActive(false);
+        _settings.SetActive(false);
+        _paused.SetActive(false);
+        _startGame.SetActive(true);
         _end.SetActive(false);
         _coinBuy.SetActive(false);
         _shop.SetActive(false);
@@ -100,12 +113,11 @@ public class GameManager : MonoBehaviour
 
         public void HighScoreCheck()
     {
-        if (FindObjectOfType<ScoreManager>().score > PlayerPrefs.GetInt("HighScore", 0))
+        if (FindObjectOfType<ScoreManager>()._score > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", FindObjectOfType<ScoreManager>().score);
+            PlayerPrefs.SetInt("HighScore", FindObjectOfType<ScoreManager>()._score);
         }
-        _highScoreText.text = "BEST " + PlayerPrefs.GetInt("HighScore", 0).ToString();
-        _endHighScoreText.text = "BEST " + PlayerPrefs.GetInt("HighScore", 0).ToString();
+        _highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
 
     public void AudioCheck()
@@ -149,11 +161,4 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("Audio", 0);
         AudioCheck();
     }
-
-    public void ShopPlanelActivation()
-    {
-        _main.SetActive(false);
-        _shop.SetActive(true);    
-    }
-
 }
