@@ -19,7 +19,7 @@ public class TreeGenerator : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (_player.transform.position.y>_spawnedChunks[_spawnedChunks.Count - 1]._end.position.y-5)
+        if (_player.transform.position.y>_spawnedChunks[_spawnedChunks.Count - 1]._end.position.y-3)
         {
             SpawnChunk();
         }
@@ -37,7 +37,7 @@ public class TreeGenerator : MonoBehaviour
         
 
 
-        if (_spawnedChunks.Count >= 11)
+        if (_spawnedChunks.Count >= 10)
         {
             Destroy(_spawnedChunks[0].gameObject);
             _spawnedChunks.RemoveAt(0);

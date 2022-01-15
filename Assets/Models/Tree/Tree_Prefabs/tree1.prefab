@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _raven: {fileID: 5317270801710576979, guid: dd46cf2cf7fb8df4a9b1439796bec4b0, type: 3}
   _spawnPoint: {fileID: 6920806707624302675}
+  MaxDubbleTapTime: 0.1
 --- !u!1 &4676213826513969499
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,6 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _raven: {fileID: 5317270801710576979, guid: dd46cf2cf7fb8df4a9b1439796bec4b0, type: 3}
   _spawnPoint: {fileID: 3248888442736041954}
+  MaxDubbleTapTime: 0.1
 --- !u!1 &4676213827894048121
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,6 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _raven: {fileID: 5317270801710576979, guid: dd46cf2cf7fb8df4a9b1439796bec4b0, type: 3}
   _spawnPoint: {fileID: 1326347934840829835}
+  MaxDubbleTapTime: 0.1
 --- !u!1 &4676213828173844729
 GameObject:
   m_ObjectHideFlags: 0
@@ -611,6 +614,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _raven: {fileID: 5317270801710576979, guid: dd46cf2cf7fb8df4a9b1439796bec4b0, type: 3}
   _spawnPoint: {fileID: 8569040286950806401}
+  MaxDubbleTapTime: 0.1
 --- !u!1 &5930125416408034899
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,6 +729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _raven: {fileID: 5317270801710576979, guid: dd46cf2cf7fb8df4a9b1439796bec4b0, type: 3}
   _spawnPoint: {fileID: 5013226236706450507}
+  MaxDubbleTapTime: 0.1
 --- !u!1 &6345401293296493873
 GameObject:
   m_ObjectHideFlags: 0
