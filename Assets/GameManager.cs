@@ -11,19 +11,16 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI  _highScoreText;
     [HideInInspector] public bool _gameIsOver = false;
     [HideInInspector] public bool _start = false;
+    [SerializeField] private ScoreManager _scoreManager;
+    [SerializeField] private AudioManager _audioManager;
     // Start is called before the first frame update
     void Start()
     {
+
         StartPanelActivation();
         AudioCheck();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-
-    }
     public void DisableAllPanel()
     {
         _main.SetActive(false);
@@ -113,9 +110,9 @@ public class GameManager : MonoBehaviour
 
         public void HighScoreCheck()
     {
-        if (FindObjectOfType<ScoreManager>()._score > PlayerPrefs.GetInt("HighScore", 0))
+        if (_scoreManager._score > PlayerPrefs.GetInt("HighScore", 0))
         {
-            PlayerPrefs.SetInt("HighScore", FindObjectOfType<ScoreManager>()._score);
+            PlayerPrefs.SetInt("HighScore", _scoreManager._score);
         }
         _highScoreText.text = PlayerPrefs.GetInt("HighScore", 0).ToString();
     }
@@ -125,14 +122,14 @@ public class GameManager : MonoBehaviour
         if (PlayerPrefs.GetInt("Audio", 0) == 0)
         {
             _muteImage.SetActive(false);
-            FindObjectOfType<AudioManager>().soundIsOn = true;
-            FindObjectOfType<AudioManager>().PlayBackgroundMusic();
+            _audioManager.soundIsOn = true;
+            _audioManager.PlayBackgroundMusic();
         }
         else
         {
             _muteImage.SetActive(true);
-            FindObjectOfType<AudioManager>().soundIsOn = false;
-            FindObjectOfType<AudioManager>().StopBackgroundMusic();
+            _audioManager.soundIsOn = false;
+            _audioManager.StopBackgroundMusic();
         }
     }
 

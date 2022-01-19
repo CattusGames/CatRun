@@ -64,7 +64,6 @@ public class Raven : MonoBehaviour
         }
         else if (_inPoint == true)
         {
-            Debug.Log("IN_POINT");
             Attack();
         }
     }
@@ -99,6 +98,7 @@ public class Raven : MonoBehaviour
     private void OnMouseDown()
     {
         _particle = true;
+        gameObject.GetComponent<BoxCollider>().enabled = false;
         GoAhead();
     }
 }

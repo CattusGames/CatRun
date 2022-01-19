@@ -10,12 +10,15 @@ public class ScoreManager : MonoBehaviour
     [SerializeField]public TextMeshProUGUI _scoreText, _highScoreText, _coinText, _endScoreText;
 
     private Animation _scoreTextAnim,_highScoreAnim, _coinTextAnim;
+    private AudioManager _audioManager;
+    [SerializeField]private GameManager _gameManager;
 
     [HideInInspector]
     public int _score = 0;
 
     void Start()
     {
+        _audioManager = gameObject.GetComponent<AudioManager>();
         _scoreTextAnim = _scoreText.gameObject.GetComponent<Animation>();     //Initializes socreTextAnim
         _coinTextAnim = _coinText.gameObject.GetComponent<Animation>();     //Initializes CoinTextAnim
         _coinText.text = PlayerPrefs.GetInt("Coin", 0).ToString();     //Writes out the number of Coins to the screen
@@ -29,20 +32,20 @@ public class ScoreManager : MonoBehaviour
     }
     public void IncrementScore()
     {
-        if (FindObjectOfType<GameManager>()._gameIsOver == false)       //If the game is not over
+        if (_gameManager._gameIsOver == false)       //If the game is not over
         _scoreText.text = (++_score).ToString();      //Increments the 'scoretext' text as well as the score variable's value and writes it out to the screen
         _scoreTextAnim.Play();       //Plays scoreTextAnim
-        FindObjectOfType<AudioManager>().ScoreSound();      //Plays scoreSound
+        _audioManager.ScoreSound();      //Plays scoreSound
     }
 
     public void IncrementCoin()
     {
-        if (FindObjectOfType<GameManager>()._gameIsOver == false)       //If the game is not over
+        if (_gameManager._gameIsOver == false)       //If the game is not over
         {
             PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin", 0) + 1);        //Increases the number of Coins
             _coinText.text = PlayerPrefs.GetInt("Coin", 0).ToString();     //Writes out the number of Coins to the screen
             _coinTextAnim.Play();       //Plays CoinTextAnim
-            FindObjectOfType<AudioManager>().CoinSound();      //Plays CoinSound
+            _audioManager.CoinSound();      //Plays CoinSound
         }
     }
 
