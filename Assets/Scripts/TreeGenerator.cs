@@ -37,7 +37,7 @@ public class TreeGenerator : MonoBehaviour
         
 
 
-        if (_spawnedChunks.Count >= 10)
+        if (_spawnedChunks.Count >= 11)
         {
             Destroy(_spawnedChunks[0].gameObject);
             _spawnedChunks.RemoveAt(0);
@@ -46,7 +46,7 @@ public class TreeGenerator : MonoBehaviour
     private void DefaultChunk()
     {
         
-        int num = Random.Range(1, 3) == 1 ? Random.Range(-30, -10) : Random.Range(10, 30);
+        int num = Random.Range(1, 3) == 1 ? Random.Range(-23, -28) : Random.Range(23, 28);
         Chunk newChunk;
         for (int i = 0; i < 1; i++)
         {
@@ -62,7 +62,7 @@ public class TreeGenerator : MonoBehaviour
     }
     private void RandomizeChunk()
     {
-        int num = Random.Range(1, 3) == 1 ? Random.Range(-40, -15) : Random.Range(15, 40);
+        int num = Random.Range(1, 3) == 1 ? Random.Range(-28, -23) : Random.Range(23, 28);
         Chunk newChunk;
         for (int i = 0; i < 1; i++)
         {

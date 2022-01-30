@@ -4,51 +4,53 @@ using UnityEngine;
 
 public class Leaves : MonoBehaviour
 {
-    [SerializeField]private GameObject _raven;
+    [SerializeField] private GameObject _raven;
     [SerializeField] private Transform _spawnPoint;
 
-    int TapCount;
-    [Range(0, 0.5f)] public float MaxDubbleTapTime;
-    float NewTime;
+    float timerForDoubleClick = 0.0f;
+    float delay = 0.3f;
+    bool isDoubleClick = false;
     // Start is called before the first frame update
     private void Start()
     {
         gameObject.SetActive(true);
     }
 
-    // Update is called once per frame
-    private void Update()
+    void Update()
     {
-        if (Input.touchCount == 1)
+        if (isDoubleClick == true)
         {
-            Touch touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Ended)
-            {
-                TapCount += 1;
-            }
-
-            if (TapCount == 1)
-            {
-
-                NewTime = Time.time + MaxDubbleTapTime;
-            }
-            else if (TapCount == 2 && Time.time <= NewTime)
-            {
-
-                gameObject.GetComponent<MeshRenderer>().enabled = false;
-                gameObject.GetComponent<MeshCollider>().enabled = false;
-                var raven = Instantiate(_raven);
-                raven.gameObject.transform.position = _spawnPoint.position;
-
-
-                TapCount = 0;
-            }
-
+            timerForDoubleClick += Time.deltaTime;
         }
-        if (Time.time > NewTime)
+
+
+        if (timerForDoubleClick >= delay)
         {
-            TapCount = 0;
+            timerForDoubleClick = 0.0f;
+            isDoubleClick = false;
+        }
+
+    }
+
+
+    void OnMouseOver()
+    {
+        if (Input.GetButtonDown("Fire1") && isDoubleClick == false)
+        {
+            Debug.Log("Mouse clicked once");
+            isDoubleClick = true;
+        }
+    }
+
+    void OnMouseDown()
+    {
+        if (isDoubleClick == true && timerForDoubleClick < delay)
+        {
+            gameObject.GetComponent<MeshRenderer>().enabled = false;
+            gameObject.GetComponent<MeshCollider>().enabled = false;
+            var raven = Instantiate(_raven);
+            raven.gameObject.transform.position = _spawnPoint.position;
         }
     }
 }
