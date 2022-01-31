@@ -14,19 +14,17 @@ public class PlayerController : MonoBehaviour
     public TrajectoryRenderer Trajectory;
     public LayerMask _whatIsFetch;
     [HideInInspector] public Vector3 _checkPoint;
-    public bool _rotate, _touchActive;
+    [HideInInspector] public bool _rotate, _touchActive;
 
 
 
-    [SerializeField] private Vector3 _mouseDownPos;
-    [SerializeField] private Vector3 _mouseUpPos;
+    private Vector3 _mouseDownPos;
+    private Vector3 _mouseUpPos;
     [SerializeField] private Transform _mainCamera;
     [SerializeField] private Transform _water;
-    [SerializeField] private float _timeLeft;
-    [SerializeField] private float _time;
 
     private Animator _animator;
-    [SerializeField]private GameObject _body;
+    [SerializeField] private GameObject _body;
     [SerializeField] private GameManager _gameManager;
     private GameObject _highFetch;
     void Start()
@@ -34,7 +32,6 @@ public class PlayerController : MonoBehaviour
         _scoreManager = gameObject.GetComponent<ScoreManager>();
         _highFetch = OnFetch();
         _animator = gameObject.GetComponentInChildren<Animator>();
-        _timeLeft = _time;
         rb = gameObject.GetComponent<Rigidbody>();
         _rotate = false;
         _touchActive = true;
@@ -42,12 +39,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (_touchActive == true)
-        {
-            _gameManager.StartGamePanelActivation();
-            _gameManager._start = true;
-            if (OnFetchChecker() == true)
+            if (OnFetchChecker() == true&& _touchActive == true)
             {
+                _gameManager.StartGamePanelActivation();
+                _gameManager._start = true;
+
                 _checkPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 _animator.SetBool("IsJump", true);
                 float rotation = _mainCamera.transform.rotation.eulerAngles.y;
@@ -68,14 +64,13 @@ public class PlayerController : MonoBehaviour
                     _mouseDownPos = new Vector3(Input.mousePosition.z, Input.mousePosition.y, Input.mousePosition.x);
                 }
             }
-        }
+        
     }
 
     private void OnMouseDrag()
     {
-        if (_touchActive == true)
-        {
-            if (OnFetchChecker() == true)
+
+            if (OnFetchChecker() == true&& _touchActive == true)
             {
                 float rotation = _mainCamera.transform.rotation.eulerAngles.y;
                 if (rotation == 0f)
@@ -108,18 +103,16 @@ public class PlayerController : MonoBehaviour
 
             }
 
-        }
+        
     }
 
     private void OnMouseUp()
     {
-        if (_touchActive == true)
-        {
-            if (OnFetchChecker() == true)
+
+            if (OnFetchChecker() == true&& _touchActive == true)
             {
                 rb.AddForce(_jumpDirection * _jumpMagnitude, ForceMode.Acceleration);
             }
-        }
     }
     private void JumpRotate(Vector3 mouseDown,Vector3 mouseUp,GameObject body)
     {
