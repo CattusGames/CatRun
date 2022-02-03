@@ -11,6 +11,7 @@ public class DeathAd : MonoBehaviour
     int _loadtry = 0;
     [SerializeField] private AudioManager _audioManager;
     [SerializeField] private GameManager _gameManager;
+
     private void adLoadCallback(RewardedInterstitialAd ad, AdFailedToLoadEventArgs args)
     {
         if (args == null)
@@ -28,17 +29,29 @@ public class DeathAd : MonoBehaviour
     }
     public void ShowRewardedInterstitialAd()
     {
-
-        // Create an empty ad request.
-        AdRequest request = new AdRequest.Builder().Build();
-        // Load the rewarded ad with the request.
-        RewardedInterstitialAd.LoadAd(adUnitId, request, adLoadCallback);
-
-        if (rewardedInterstitialAd != null)
+        if (PlayerPrefs.GetInt("ad") != 1)
         {
+            // Create an empty ad request.
+            AdRequest request = new AdRequest.Builder().Build();
+            // Load the rewarded ad with the request.
+            RewardedInterstitialAd.LoadAd(adUnitId, request, adLoadCallback);
 
-            rewardedInterstitialAd.Show(userEarnedRewardCallback);
+            if (rewardedInterstitialAd != null)
+            {
+
+                rewardedInterstitialAd.Show(userEarnedRewardCallback);
+            }
         }
+        else
+        {
+            _audioManager.PlayBackgroundMusic();
+            _gameManager._deathAd = true;
+            rewardedInterstitialAd.OnAdFailedToPresentFullScreenContent -= HandleAdFailedToPresent;
+            rewardedInterstitialAd.OnAdDidPresentFullScreenContent -= HandleAdDidPresent;
+            rewardedInterstitialAd.OnAdDidDismissFullScreenContent -= HandleAdDidDismiss;
+            rewardedInterstitialAd.OnPaidEvent -= HandlePaidEvent;
+        }
+
     }
 
     private void userEarnedRewardCallback(Reward reward)

@@ -202,6 +202,18 @@ public class GameManager : MonoBehaviour
             StartPanelActivation();
         }
     }
+    public void BackShopButton()
+    {
+        if (_start == true)
+        {
+            _shop.SetActive(false);
+            _startGame.SetActive(true);
+        }
+        else
+        {
+            StartPanelActivation();
+        }
+    }
     public void AudioButton()
     {
         if (PlayerPrefs.GetInt("Audio", 0) == 0)

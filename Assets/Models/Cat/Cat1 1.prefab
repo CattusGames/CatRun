@@ -209,6 +209,7 @@ GameObject:
   - component: {fileID: 8164025887550698991}
   - component: {fileID: 5005196744547318197}
   - component: {fileID: 865575336905591268}
+  - component: {fileID: 4597222546881140687}
   m_Layer: 0
   m_Name: Cat1 1
   m_TagString: Player
@@ -300,6 +301,7 @@ MonoBehaviour:
   _player: {fileID: 978548079314235863}
   _fetchPrefabs:
   - {fileID: 4572354666633163421, guid: 0ceb4d17f8a33b2428254ed7ffa2bb37, type: 3}
+  - {fileID: 4572354666633163421, guid: 3a349b22a05407b47b9d41922758dd23, type: 3}
   _firstChunk: {fileID: 0}
   _treeChunk: {fileID: 2255440676531494629, guid: 43a04f295c28ba94d8047ab29f3ad4bf, type: 3}
   _spawnedChunks: []
@@ -439,6 +441,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4597222546881140687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495203440282708845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4b3db0539aef44c9f1d16a7149ce4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _banner: {fileID: 0}
 --- !u!1 &560134968449724917
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,6 +1143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6958080739317996070}
   - component: {fileID: 5116907654198662017}
+  - component: {fileID: 7293956570733704673}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1241,6 +1257,56 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.00008521351, y: 0.00038640876, z: -0.00077607634}
     m_Extent: {x: 0.0013245875, y: 0.0021407057, z: 0.0017150001}
   m_DirtyAABB: 0
+--- !u!114 &7293956570733704673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4219802327288963944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a029ec9d0c5c5243a9854e8cd3803be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+  - cost: 0
+    material: {fileID: 2100000, guid: b14bd1c2192e34c42a21ebbb457b657e, type: 2}
+    inStock: 1
+    isChosen: 0
+  - cost: 100
+    material: {fileID: 2100000, guid: e18ae3a7ec0ecff44bc2d5eb7a6f298c, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 100
+    material: {fileID: 2100000, guid: bfa72447b1a442743bb2b19813c53a77, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 100
+    material: {fileID: 2100000, guid: 66ef0db0e0805294dab2ab07f661f3a6, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 200
+    material: {fileID: 2100000, guid: 99e1b10b9b651314286dbdce13d72fdf, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 200
+    material: {fileID: 2100000, guid: 95a98f5fbe1b3b742a585d6bd7985706, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 200
+    material: {fileID: 2100000, guid: 0620378b352f3c4418d51218d3e19ef3, type: 2}
+    inStock: 0
+    isChosen: 0
+  - cost: 500
+    material: {fileID: 2100000, guid: e586a8b861055e342815b43ba68d09ce, type: 2}
+    inStock: 0
+    isChosen: 0
+  buyBttn: {fileID: 0}
+  priceText: {fileID: 0}
+  coinsText: {fileID: 0}
+  index: 0
+  coins: 0
 --- !u!1 &4679592019560948555
 GameObject:
   m_ObjectHideFlags: 0

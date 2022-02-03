@@ -12,14 +12,15 @@ public class SkinChanger : MonoBehaviour
     public Button buyBttn;
     public TextMeshProUGUI priceText;
     public TextMeshProUGUI coinsText;
-    public Transform player;
+    private SkinnedMeshRenderer _meshRenderer;
     public int index;
 
     public int coins;
 
     private void Awake()
     {
-        coins = PlayerPrefs.GetInt("coins");
+        _meshRenderer = gameObject.GetComponent<SkinnedMeshRenderer>();
+        coins = PlayerPrefs.GetInt("Coin");
         index = PlayerPrefs.GetInt("chosenSkin");
         coinsText.text = coins.ToString();
 
@@ -36,9 +37,7 @@ public class SkinChanger : MonoBehaviour
         {
             info[i].inStock = StockCheck[i];
             if (i == index)
-                player.GetChild(i).gameObject.SetActive(true);
-            else
-                player.GetChild(i).gameObject.SetActive(false);
+                _meshRenderer.material = info[i].material;
         }
 
         priceText.text = "CHOSEN";
@@ -52,7 +51,7 @@ public class SkinChanger : MonoBehaviour
 
     public void ScrollRight()
     {
-        if (index < player.childCount)
+        if (index < info.Length)
         {
             index++;
 
@@ -71,12 +70,10 @@ public class SkinChanger : MonoBehaviour
                 priceText.text = "CHOOSE";
                 buyBttn.interactable = true;
             }
-
-            for (int i = 0; i < player.childCount; i++)
-                player.GetChild(i).gameObject.SetActive(false);
+                _meshRenderer.material = info[index].material;
             // Можно записать так: player.GetChild(index-1).gameObject.SetActive(false);
 
-            player.GetChild(index).gameObject.SetActive(true);
+            //player.GetChild(index).gameObject.SetActive(true);
         }
     }
 
@@ -102,10 +99,9 @@ public class SkinChanger : MonoBehaviour
                 buyBttn.interactable = true;
             }
 
-            for (int i = 0; i < player.childCount; i++)
-                player.GetChild(i).gameObject.SetActive(false);
+            _meshRenderer.material = info[index].material;
 
-            player.GetChild(index).gameObject.SetActive(true);
+            //player.GetChild(index).gameObject.SetActive(true);
         }
     }
 
@@ -117,7 +113,7 @@ public class SkinChanger : MonoBehaviour
             {
                 coins -= int.Parse(priceText.text);
                 coinsText.text = coins.ToString();
-                PlayerPrefs.SetInt("coins", coins);
+                PlayerPrefs.SetInt("Coin", coins);
                 StockCheck[index] = true;
                 info[index].inStock = true;
                 priceText.text = "CHOOSE";
@@ -139,6 +135,7 @@ public class SkinChanger : MonoBehaviour
 public class Skin
 {
     public int cost;
+    public Material material;
     public bool inStock;
     public bool isChosen;
 }

@@ -55,7 +55,7 @@ public class TreeGenerator : MonoBehaviour
             newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + num, 0));
             _spawnedChunks.Add(newChunk);
         }
-        newChunk = Instantiate(_fetchPrefabs[0]);
+        newChunk = Instantiate(_fetchPrefabs[Random.Range(0, _fetchPrefabs.Length)]);
         newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
         newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 2].transform.rotation.eulerAngles.y + num, 0));
         _spawnedChunks.Add(newChunk);
@@ -71,7 +71,7 @@ public class TreeGenerator : MonoBehaviour
             newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 1].transform.rotation.eulerAngles.y + num, 0));
             _spawnedChunks.Add(newChunk);
         }
-        newChunk = Instantiate(_fetchPrefabs[0]);
+        newChunk = Instantiate(_fetchPrefabs[Random.Range(0, _fetchPrefabs.Length)]);
         newChunk.transform.position = _spawnedChunks[_spawnedChunks.Count - 1]._end.position - newChunk._begin.localPosition;
         newChunk.transform.Rotate(new Vector3(0, _spawnedChunks[_spawnedChunks.Count - 2].transform.rotation.eulerAngles.y + num, 0));
         _spawnedChunks.Add(newChunk);

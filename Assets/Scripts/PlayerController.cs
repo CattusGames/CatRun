@@ -36,7 +36,6 @@ public class PlayerController : MonoBehaviour
         _rotate = false;
         _touchActive = true;
     }
-
     private void OnMouseDown()
     {
             if (OnFetchChecker() == true&& _touchActive == true)

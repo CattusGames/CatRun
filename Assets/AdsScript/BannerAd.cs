@@ -11,6 +11,10 @@ public class BannerAd : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (PlayerPrefs.GetInt("ad")==1)
+        {
+            _bannerAd.Destroy();
+        }
         MobileAds.Initialize(initStatus => { });
         RequestBanner();
     }
