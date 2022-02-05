@@ -13,10 +13,14 @@ public class BannerAd : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("ad")==1)
         {
-            _bannerAd.Destroy();
+            gameObject.SetActive(false);
         }
-        MobileAds.Initialize(initStatus => { });
-        RequestBanner();
+        else
+        {
+            MobileAds.Initialize(initStatus => { });
+            RequestBanner();
+        }
+
     }
 
     private void RequestBanner()

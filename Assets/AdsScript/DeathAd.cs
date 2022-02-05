@@ -29,7 +29,13 @@ public class DeathAd : MonoBehaviour
     }
     public void ShowRewardedInterstitialAd()
     {
-        if (PlayerPrefs.GetInt("ad") != 1)
+        if (PlayerPrefs.GetInt("ad") == 1)
+        {
+            _audioManager.PlayBackgroundMusic();
+            _gameManager._deathAd = true;
+           
+        }
+        else
         {
             // Create an empty ad request.
             AdRequest request = new AdRequest.Builder().Build();
@@ -41,15 +47,6 @@ public class DeathAd : MonoBehaviour
 
                 rewardedInterstitialAd.Show(userEarnedRewardCallback);
             }
-        }
-        else
-        {
-            _audioManager.PlayBackgroundMusic();
-            _gameManager._deathAd = true;
-            rewardedInterstitialAd.OnAdFailedToPresentFullScreenContent -= HandleAdFailedToPresent;
-            rewardedInterstitialAd.OnAdDidPresentFullScreenContent -= HandleAdDidPresent;
-            rewardedInterstitialAd.OnAdDidDismissFullScreenContent -= HandleAdDidDismiss;
-            rewardedInterstitialAd.OnPaidEvent -= HandlePaidEvent;
         }
 
     }

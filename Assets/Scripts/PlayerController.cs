@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject _body;
     [SerializeField] private GameManager _gameManager;
     private GameObject _highFetch;
-    void Start()
+    private void Start()
     {
         _scoreManager = gameObject.GetComponent<ScoreManager>();
         _highFetch = OnFetch();
@@ -38,10 +38,11 @@ public class PlayerController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-            if (OnFetchChecker() == true&& _touchActive == true)
+
+            if (OnFetchChecker() == true && _touchActive == true)
             {
-                _gameManager.StartGamePanelActivation();
-                _gameManager._start = true;
+            _gameManager.StartGamePanelActivation();
+            _gameManager._start = true;
 
                 _checkPoint = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
                 _animator.SetBool("IsJump", true);
@@ -68,8 +69,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-
-            if (OnFetchChecker() == true&& _touchActive == true)
+        if (OnFetchChecker() == true&& _touchActive == true)
             {
                 float rotation = _mainCamera.transform.rotation.eulerAngles.y;
                 if (rotation == 0f)
@@ -107,8 +107,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseUp()
     {
-
-            if (OnFetchChecker() == true&& _touchActive == true)
+        if (OnFetchChecker() == true&& _touchActive == true)
             {
                 rb.AddForce(_jumpDirection * _jumpMagnitude, ForceMode.Acceleration);
             }
@@ -148,6 +147,7 @@ public class PlayerController : MonoBehaviour
     }
     public void ToCheckPoint()
     {
+        rb.drag = 0f;
         gameObject.transform.position = new Vector3(_checkPoint.x, _checkPoint.y, _checkPoint.z);
     }
     private void OnTriggerStay(Collider collision)
@@ -158,8 +158,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("InJump",false);
             rb.drag = 3f;
             rb.AddForce(transform.up*15f);
-
-           
+            
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -188,11 +187,6 @@ public class PlayerController : MonoBehaviour
             {
                 _highFetch = OnFetch();
                 _scoreManager.IncrementScore();
-            }
-
-            if (_animator.GetBool("InWater") == true)
-            {
-                Physics.IgnoreCollision(OnFetch().GetComponent<Collider>(), GetComponent<Collider>());
             }
         }
     }

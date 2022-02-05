@@ -24,71 +24,74 @@ public class InWaterBehaviour : StateMachineBehaviour
         _rb = animator.GetComponentInParent<Rigidbody>();
         _playerController = animator.gameObject.GetComponentInParent<PlayerController>();
 
+        _playerController._touchActive = false;
+
+        
 
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (_scoreManager._score >= 5 && _life==true)
-        {
-            if (_preAdActivate==false)
-            {
-                _gameManager.PreEndPanelActivation();
-                _preAdActivate = true;
-            }
-            
-            _waitTimer += Time.deltaTime;
-            if (_waitTimer < 2f)
-            {
-                _gameManager._endButton.SetActive(false);
-            }
 
-            if (_gameManager._deathAd == true)
+        //Physics.IgnoreCollision(_playerController.OnFetch().GetComponent<Collider>(), animator.GetComponentInParent<Collider>());
+        if (_scoreManager._score >= 5 && _life == true)
             {
+                if (_preAdActivate == false&&_gameManager._deathAd==false)
+                {
+                    _gameManager.PreEndPanelActivation();
+                    _preAdActivate = true;
+                }
+
+                _waitTimer += Time.deltaTime;
+                if (_waitTimer < 2f)
+                {
+                    _gameManager._endButton.SetActive(false);
+                }
+
+                if (_gameManager._deathAd == true)
+                {
+
+                _playerController.ToCheckPoint();
                 _gameManager.StartGamePanelActivation();
-                if (_playerController.OnFetchChecker() == false)
+                if (_playerController.OnFetchChecker() == true)
+                    {
+                   
+                    _playerController._touchActive = true;
+                        animator.SetBool("InWater", false);
+                        _water.DecrementPosition();
+                        _water._isMove = true;
+                        _gameManager._deathAd = false;
+                        _life = false;
+                    }
+                _gameManager._deathAd = false;
+                }
+                else
                 {
-                    _rb.drag = 0f;
-                    _playerController.ToCheckPoint();
+                    _gameManager._deathAd = false;
+                    _gameManager._endButton.SetActive(true);
 
                 }
-                if (_playerController.OnFetchChecker() == true)
-                {
-                    _gameManager.StartGamePanelActivation();
-                    animator.SetBool("InWater", false);
-                    _water.DecrementPosition();
-                    _water._isMove = true;
-                    _gameManager._deathAd = false;
-                    _life=false;
-                }
-                _gameManager._deathAd = false;
             }
             else
             {
-                _gameManager._deathAd = false;
-                _gameManager._endButton.SetActive(true);
+                if (_endActivate == false && _gameManager._deathAd == false)
+                {
+                    _gameManager.EndPanelActivation();
+                    _endActivate = true;
+                }
 
             }
-        }
-        else
-        {
-            if (_endActivate==false&&_gameManager._deathAd == false&& _playerController.OnFetchChecker() == false)
-            {
-                _gameManager.EndPanelActivation();
-                _endActivate = true;
-            }
-
-        }
-
-        
-
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        _gameManager.StartGamePanelActivation();
+        if (_playerController._touchActive == true)
+        {
+            _gameManager.StartGamePanelActivation();
+        }
+
 
     }
 

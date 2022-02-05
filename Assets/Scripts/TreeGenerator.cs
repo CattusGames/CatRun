@@ -37,7 +37,7 @@ public class TreeGenerator : MonoBehaviour
         
 
 
-        if (_spawnedChunks.Count >= 11)
+        if (_spawnedChunks.Count >= 13)
         {
             Destroy(_spawnedChunks[0].gameObject);
             _spawnedChunks.RemoveAt(0);
