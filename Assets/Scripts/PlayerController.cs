@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnMouseDown()
     {
-
+        Trajectory._time = 0;
             if (OnFetchChecker() == true && _touchActive == true)
             {
             _gameManager.StartGamePanelActivation();
@@ -107,6 +107,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnMouseUp()
     {
+        Trajectory._time = 0;
+
         if (OnFetchChecker() == true&& _touchActive == true)
             {
                 rb.AddForce(_jumpDirection * _jumpMagnitude, ForceMode.Acceleration);

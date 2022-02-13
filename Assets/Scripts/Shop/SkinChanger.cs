@@ -104,7 +104,11 @@ public class SkinChanger : MonoBehaviour
             //player.GetChild(index).gameObject.SetActive(true);
         }
     }
-
+    public void SetChoosenSkin()
+    {
+        index = PlayerPrefs.GetInt("chosenSkin");
+        _meshRenderer.material = info[index].material;
+    }
     public void BuyButtonAction()
     {
         if (buyBttn.interactable && !info[index].inStock)

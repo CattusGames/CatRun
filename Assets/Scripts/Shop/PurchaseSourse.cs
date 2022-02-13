@@ -14,7 +14,7 @@ public class PurchaseSourse : MonoBehaviour
             _coin = 1000;
             PlayerPrefs.SetInt("Coin",PlayerPrefs.GetInt("Coin")+_coin);
         }
-        else if (product.definition.id == "noAds")
+        else if (product.definition.id == "noads")
         {
             PlayerPrefs.SetInt("ad",1);
         }

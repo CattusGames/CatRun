@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _player, _main, _settings, _paused, _end,_preEnd, _coinBuy, _shop,_startGame, _audioMuteImage,_musicMuteImage,_vibrationMuteImage;
     public GameObject _endButton;
     private AudioManager _audioManager;
+    [SerializeField] private SkinChanger _skinChanger;
     private ScoreManager _scoreManager;
     private PlayerController _playerController;
     public TextMeshProUGUI  _highScoreText;
@@ -209,9 +210,11 @@ public class GameManager : MonoBehaviour
         {
             _shop.SetActive(false);
             _startGame.SetActive(true);
+            _skinChanger.SetChoosenSkin();
         }
         else
         {
+            _skinChanger.SetChoosenSkin();
             StartPanelActivation();
         }
     }

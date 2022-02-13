@@ -5,6 +5,7 @@ using UnityEngine;
 public class JumpBehaviour : StateMachineBehaviour
 {
     private PlayerController _playerController;
+    private TrajectoryRenderer _trajectory;
     private Rigidbody _rb;
     private float _maxMagnitude;
     private float _recentMagnitude;
@@ -14,6 +15,7 @@ public class JumpBehaviour : StateMachineBehaviour
     {
         _rb = animator.GetComponentInParent<Rigidbody>();
         _playerController = animator.gameObject.GetComponentInParent<PlayerController>();
+        _trajectory = _playerController.Trajectory;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -30,12 +32,13 @@ public class JumpBehaviour : StateMachineBehaviour
         }
         else
         {
-
             if (_recentMagnitude<_maxMagnitude)
             {
                 _maxMagnitude = _recentMagnitude;
                 if (_jumpProgress<0.5f)
                 {
+                    
+
                     _jumpProgress += Time.deltaTime;
                     animator.SetFloat("JumpProgress", _jumpProgress);
                 }
@@ -49,6 +52,7 @@ public class JumpBehaviour : StateMachineBehaviour
             }
             else if (_recentMagnitude>_maxMagnitude)
             {
+                _trajectory.HideTrajectory();
                 if (_jumpProgress >= 1f)
                 {
                     animator.SetBool("IsJump", false);
