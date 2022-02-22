@@ -7,9 +7,11 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _player, _main, _settings, _paused, _end,_preEnd, _coinBuy, _shop,_startGame, _audioMuteImage,_musicMuteImage,_vibrationMuteImage;
+    [SerializeField] private GameObject _player, _main, _settings, _paused, _end,_preEnd, _coinBuy, _shop,_skins,_themes,_startGame, _audioMuteImage,_musicMuteImage,_vibrationMuteImage;
     public GameObject _endButton;
     private AudioManager _audioManager;
+    [SerializeField] private Button _skinButton;
+    [SerializeField] private Button _themesButton;
     [SerializeField] private SkinChanger _skinChanger;
     private ScoreManager _scoreManager;
     private PlayerController _playerController;
@@ -17,6 +19,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool _gameIsOver = false;
     [HideInInspector] public bool _start = false;
     [HideInInspector] public bool _deathAd = false;
+    private bool _pause;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +46,7 @@ public class GameManager : MonoBehaviour
     }
     public void StartPanelActivation()
     {
+        _pause = false;
         _playerController._touchActive = true;
         _main.SetActive(true);
         _settings.SetActive(false); 
@@ -80,8 +85,27 @@ public class GameManager : MonoBehaviour
         _preEnd.SetActive(true);
 
     }
+    public void ThemePanelActivation()
+    {
+        
+        _skins.SetActive(false);
+        _themes.SetActive(true);
+    }
+    public void SkinPanelActivation()
+    {
+        _themes.SetActive(false);
+        _skins.SetActive(true);
+    }
     public void ShopPanelActivation()
     {
+        if (_pause == true)
+        {
+            _themesButton.interactable = false;
+        }
+        else
+        {
+            _themesButton.interactable = true;
+        }
         _playerController._touchActive = false;
         _main.SetActive(false);
         _shop.SetActive(true);
@@ -104,6 +128,7 @@ public class GameManager : MonoBehaviour
     {
         _playerController._touchActive = false;
         _start = false;
+        _pause = true;
         _main.SetActive(false);
         _settings.SetActive(false);
         _paused.SetActive(true);
@@ -187,7 +212,17 @@ public class GameManager : MonoBehaviour
             _audioManager._vibrationIsOn = false;
         }
     }
-
+    public void ExitCoinBuyPanel()
+    {
+        if (_gameIsOver == false)
+        {
+            StartPanelActivation();
+        }
+        else
+        {
+            EndPanelActivation();
+        }
+    }
     public void RestartButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -206,10 +241,9 @@ public class GameManager : MonoBehaviour
     }
     public void BackShopButton()
     {
-        if (_start == true)
+        if (_pause == true)
         {
-            _shop.SetActive(false);
-            _startGame.SetActive(true);
+            StartGamePanelActivation();
             _skinChanger.SetChoosenSkin();
         }
         else

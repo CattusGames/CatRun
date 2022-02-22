@@ -9,7 +9,9 @@ public class SkinChanger : MonoBehaviour
     public Skin[] info;
     private bool[] StockCheck;
 
-    public Button buyBttn;
+    [SerializeField] private Button buyBttn;
+
+
     public TextMeshProUGUI priceText;
     public TextMeshProUGUI coinsText;
     private SkinnedMeshRenderer _meshRenderer;
@@ -143,3 +145,4 @@ public class Skin
     public bool inStock;
     public bool isChosen;
 }
+

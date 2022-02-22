@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.SceneManagement;
 public class TreeGenerator : MonoBehaviour
 {
     [SerializeField] private GameObject _player;
@@ -48,6 +49,7 @@ public class TreeGenerator : MonoBehaviour
         
         int num = Random.Range(1, 3) == 1 ? Random.Range(-23, -28) : Random.Range(23, 28);
         Chunk newChunk;
+
         for (int i = 0; i < 1; i++)
         {
             newChunk = Instantiate(_treeChunk);

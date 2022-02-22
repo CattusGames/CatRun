@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4095364399709444726}
   - component: {fileID: 4095364399709444725}
+  - component: {fileID: 3202207877835560587}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -49,10 +50,40 @@ MonoBehaviour:
   _settings: {fileID: 0}
   _paused: {fileID: 0}
   _end: {fileID: 0}
+  _preEnd: {fileID: 0}
   _coinBuy: {fileID: 0}
   _shop: {fileID: 0}
   _startGame: {fileID: 0}
-  _muteImage: {fileID: 0}
+  _audioMuteImage: {fileID: 0}
+  _musicMuteImage: {fileID: 0}
+  _vibrationMuteImage: {fileID: 0}
+  _endButton: {fileID: 0}
+  _skinButton: {fileID: 0}
+  _themesButton: {fileID: 0}
+  _skinChanger: {fileID: 0}
   _highScoreText: {fileID: 0}
   _gameIsOver: 0
   _start: 0
+  _deathAd: 0
+--- !u!114 &3202207877835560587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4095364399709444724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762b06f9f4fffd245bb63f51fc4d3e9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info: []
+  buyBttn: {fileID: 0}
+  _themeImage: {fileID: 0}
+  _fetch: {fileID: 0}
+  _tree: {fileID: 0}
+  _leaves: {fileID: 0}
+  priceText: {fileID: 0}
+  coinsText: {fileID: 0}
+  index: 0
+  coins: 0

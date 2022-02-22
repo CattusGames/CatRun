@@ -95,7 +95,7 @@ public class PlayerController : MonoBehaviour
                     JumpRotate(_mouseDownPos, _mouseUpPos, _body);
 
                 }
-                _jumpDirection = (_mouseDownPos - _mouseUpPos) / 3;
+                _jumpDirection = (_mouseDownPos - _mouseUpPos) / 4;
                 _jumpMagnitude = _jumpDirection.magnitude / 100;
                 Vector3 speed = _jumpDirection * _jumpMagnitude / 50;
                 Trajectory.ShowTrajectory(gameObject.transform.localPosition, speed);
@@ -161,20 +161,6 @@ public class PlayerController : MonoBehaviour
             rb.drag = 3f;
             rb.AddForce(transform.up*15f);
             
-        }
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.transform.tag=="Raven")
-        {
-            foreach (ContactPoint contact in collision.contacts)
-            {
-                if (contact.thisCollider.tag =="Raven")
-                {
-                    Debug.Log("IMPULSE");
-                    rb.AddForce(contact.thisCollider.transform.position * 5f, ForceMode.Impulse);
-                }
-            }
         }
     }
     private void OnCollisionStay(Collision collision)

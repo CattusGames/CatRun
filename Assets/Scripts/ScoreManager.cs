@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using GooglePlayGames;
+using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -14,7 +17,7 @@ public class ScoreManager : MonoBehaviour
 
     [HideInInspector]
     public int _score = 0;
-
+    private const string leaderBoard = "CgkIh82gl6AUEAIQAA";
     void Start()
     {
         _scoreTextAnim = _scoreText.gameObject.GetComponent<Animation>();     //Initializes socreTextAnim
@@ -23,11 +26,36 @@ public class ScoreManager : MonoBehaviour
         _scoreText.text = _score.ToString();
         _audioManager = gameObject.GetComponent<AudioManager>();
         _highScoreText.text = PlayerPrefs.GetInt("HighScore").ToString();
+
+        PlayGamesPlatform.DebugLogEnabled = true;
+        PlayGamesPlatform.Activate();
+        Social.localUser.Authenticate(success =>
+        {
+            if (success)
+            {
+
+            }
+            else
+            {
+
+            }
+        });
+        Social.ReportScore(PlayerPrefs.GetInt("HighScore"),leaderBoard,(bool success)=> { });
+
     }
+    
     private void Update()
     {
         _endScoreText.text = _score.ToString();
         
+    }
+    public void ShowLeaderBoard()
+    {
+        Social.ShowLeaderboardUI();
+    }
+    public void ExitFromGPGS()
+    {
+        PlayGamesPlatform.Instance.SignOut();
     }
     public void IncrementScore()
     {

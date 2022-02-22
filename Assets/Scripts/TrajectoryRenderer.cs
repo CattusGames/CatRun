@@ -13,14 +13,16 @@ public class TrajectoryRenderer : MonoBehaviour
     [SerializeField]private Transform _player;
     [Range(0,2)][SerializeField]private float _DisolveSpeed;
     private int _DissolveID;
-    private int _ThresholdID;
+    private int _ColorID;
     public float _time = 0;
+    [SerializeField] private Color _firstColor;
+    [SerializeField] private Color _secondColor;
     private void Start()
     {
         _DissolveID = Shader.PropertyToID("_Dissolve");
-        _ThresholdID = Shader.PropertyToID("_Threshold");
+        _ColorID = Shader.PropertyToID("_Color");
         _DissolveMaterial.SetFloat(_DissolveID, 1);
-        _OclusionMaterial.SetFloat(_ThresholdID, 1);
+        _OclusionMaterial.SetColor(_ColorID, _secondColor);
         _lineRenderer = gameObject.GetComponent<LineRenderer>();
     }
 
@@ -41,7 +43,6 @@ public class TrajectoryRenderer : MonoBehaviour
              RaycastHit hit;
         if (Physics.Raycast(points[points.Length - 1], Vector3.down, out hit,_lineColissionObjects))
         {
-            Debug.Log("LineCollide");
             _colissionParticle.transform.position = hit.point;
         }
         else
@@ -50,7 +51,7 @@ public class TrajectoryRenderer : MonoBehaviour
         }
 
         _time += Time.deltaTime;
-        _OclusionMaterial.SetFloat(_ThresholdID, 1);
+        _OclusionMaterial.SetColor(_ColorID, _firstColor);
         _DissolveMaterial.SetFloat(_DissolveID, Mathf.Lerp(1, 0,_time*_DisolveSpeed));
 
     }
@@ -59,6 +60,6 @@ public class TrajectoryRenderer : MonoBehaviour
         _colissionParticle.transform.position = Vector3.zero;
         _time += Time.deltaTime;
         _DissolveMaterial.SetFloat(_DissolveID, Mathf.Lerp(0, 1, _time *1));
-       _OclusionMaterial.SetFloat(_ThresholdID, 0);
+        _OclusionMaterial.SetColor(_ColorID, _secondColor);
     }
 }

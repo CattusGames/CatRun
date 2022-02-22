@@ -210,6 +210,7 @@ GameObject:
   - component: {fileID: 5005196744547318197}
   - component: {fileID: 865575336905591268}
   - component: {fileID: 4597222546881140687}
+  - component: {fileID: 2637439868750553223}
   m_Layer: 0
   m_Name: Cat1 1
   m_TagString: Player
@@ -298,9 +299,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e88615ba00f1154b9e8c55956904c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 978548079314235863}
+  _player: {fileID: 495203440282708845}
   _fetchPrefabs:
-  - {fileID: 4572354666633163421, guid: 0ceb4d17f8a33b2428254ed7ffa2bb37, type: 3}
+  - {fileID: 4572354666633163421, guid: 3090ae00e50c1324582e6abb1c521c4a, type: 3}
   - {fileID: 4572354666633163421, guid: 3a349b22a05407b47b9d41922758dd23, type: 3}
   _firstChunk: {fileID: 0}
   _treeChunk: {fileID: 2255440676531494629, guid: 43a04f295c28ba94d8047ab29f3ad4bf, type: 3}
@@ -453,6 +454,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e4b3db0539aef44c9f1d16a7149ce4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!65 &2637439868750553223
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495203440282708845}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.16, y: 0.53, z: 0.62}
+  m_Center: {x: 0, y: 0.15, z: 0}
 --- !u!1 &560134968449724917
 GameObject:
   m_ObjectHideFlags: 0
@@ -981,11 +995,11 @@ Camera:
   m_GameObject: {fileID: 3618249489565874304}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0, g: 0.38888884, b: 1, a: 0}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 1
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
   m_FocalLength: 50
@@ -995,12 +1009,12 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.81
-  far clip plane: 10689.6
-  field of view: 63.498325
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: -1
+  m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1012,7 +1026,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!81 &5731731644993807271
@@ -1146,11 +1160,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderShadows: 0
-  m_RequiresDepthTextureOption: 1
-  m_RequiresOpaqueTextureOption: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 0
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
