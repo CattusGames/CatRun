@@ -55,7 +55,7 @@ public class ScoreManager : MonoBehaviour
     }
     public void ExitFromGPGS()
     {
-        PlayGamesPlatform.Instance.SignOut();
+    
     }
     public void IncrementScore()
     {
